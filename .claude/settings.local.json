@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py --version)",
+      "Bash(where python *)",
+      "Bash(where py *)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/Sumanth Pashuparthi/AppData/Local/Programs/**)",
+      "Read(//c/Users/Sumanth Pashuparthi/AppData/Local/Microsoft/WindowsApps//**)",
+      "Bash(/c/Users/Sumanth Pashuparthi/AppData/Local/Microsoft/WindowsApps/python.exe *)",
+      "Bash(\"/c/Users/Sumanth Pashuparthi/AppData/Local/Microsoft/WindowsApps/python.exe\" -m venv .venv)",
+      "Read(//c/c/Users/Sumanth Pashuparthi/roman_left_hand/.venv/**)",
+      "Bash(.venv/Scripts/python.exe -m pip install --upgrade pip)",
+      "Bash(.venv/Scripts/python.exe -m pip install xarm-python-sdk)",
+      "Bash(.venv/Scripts/python.exe -m pip freeze)",
+      "Bash(.venv/Scripts/python.exe -c ' *)"
+    ]
+  }
+}
