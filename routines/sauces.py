@@ -36,6 +36,8 @@ def pour_all_sauces(robot) -> bool:
             transit_z=SAUCE_TRANSIT_Z,
             grip_bottle=GRIPPER_BOTTLE,
             grip_release=GRIPPER_HOME,
+            return_z=sauce.get('return_z'),
+            exit_pose=sauce.get('exit_pose'),
         )
         if not ok:
             return False

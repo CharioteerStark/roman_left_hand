@@ -25,7 +25,10 @@ SAUCES = [
     {'name': 'sauce_1', 'xy': (469.2, 1021.2), 'grab_z': 405.0, 'lift_z': 477.9, 'pour_over': POUR_OVER_LOW},
     {'name': 'sauce_2', 'xy': (331.6, 1021.2), 'grab_z': 405.0, 'lift_z': 477.0, 'pour_over': POUR_OVER_LOW},
     {'name': 'sauce_3', 'xy': (189.9, 1031.9), 'grab_z': 405.0, 'lift_z': 477.0, 'pour_over': POUR_OVER_LOW},
-    {'name': 'sauce_4', 'xy': ( 55.8, 1036.0), 'grab_z': 413.4, 'lift_z': 477.0, 'pour_over': POUR_OVER_HIGH},
+    # sauce_4 is picked at 413.4 but seated back at 405.0, and exits to a
+    # dedicated pose (x nudged to 54.8, z=570.2) instead of the shared transit height
+    {'name': 'sauce_4', 'xy': ( 55.8, 1036.0), 'grab_z': 413.4, 'lift_z': 477.0, 'pour_over': POUR_OVER_HIGH,
+     'return_z': 405.0, 'exit_pose': [54.8, 1036.0, 570.2, -91.7, 90.0, 0.0]},
 ]
 
 # -- Ingredients ------------------------------------------------------------
@@ -36,7 +39,7 @@ INGREDIENTS = [
     {
         'name':          'egg',
         'approach':      [-95.2, 858.6, 470.5, -91.7, 90.0, 0.0],
-        'pick_pose':     [-95.2, 858.6, 401.0, -91.7, 90.0, 0.0],
+        'pick_pose':     [-95.2, 858.6, 394.0, -91.7, 90.0, 0.0],
         'grip_close':    100,
         'via_out':       [317.9, 733.6, 432.5,   4.0, 86.9, 26.8],
         'drop_approach': EGG_APPROACH,
@@ -44,10 +47,14 @@ INGREDIENTS = [
         'grip_release':  400,
     },
     {
+        # meat is soft — pre-open wide and hold the close for 1.5s so the
+        # jaws fully seat before we retract
         'name':          'meat',
         'approach':      [257.1, 781.6, 432.5,   4.0, 86.9, 90.6],
-        'pick_pose':     [257.1, 781.6, 274.8,   4.0, 86.9, 90.6],
+        'pick_pose':     [257.1, 781.6, 295.5,   4.0, 86.9, 90.6],
+        'grip_preopen':  550,
         'grip_close':    0,
+        'grip_hold_sec': 1.5,
         'via_out':       [446.9, 690.7, 432.5,   4.6, 86.8,  2.3],
         'drop_approach': DROP_APPROACH,
         'drop_pose':     [560.2,  34.8, 238.7,  23.0, 89.7, -4.9],
@@ -82,12 +89,20 @@ INGREDIENTS = [
         'grip_release':  400,
     },
     {
-        # veg_4 routes back through veg_3's approach before crossing to the bowl
+        # veg_4 threads a multi-waypoint approach path from the bowl side
+        # over to its slot; the reversed path is walked on retract so the
+        # gripper returns the same way it came. Pose 1 is veg_3's approach —
+        # the old single `via_out` folded into the path's head.
         'name':          'veg_4',
-        'approach':      [-168.1, 707.9, 385.3,  8.6, 89.5,  9.9],
-        'pick_pose':     [-168.1, 707.9, 295.1,  8.6, 89.5,  9.9],
+        'approach_path': [
+            [  -1.9, 707.9, 407.7, 8.6, 89.5, 9.9],
+            [  -1.9, 707.9, 358.7, 8.6, 89.5, 9.9],
+            [-110.2, 707.9, 358.7, 8.6, 89.5, 9.9],
+            [-133.1, 720.1, 329.9, 8.6, 89.5, 9.9],
+        ],
+        'pick_pose':     [-168.1, 707.9, 285.3,  8.6, 89.5,  9.9],
+        'grip_preopen':  550,
         'grip_close':    0,
-        'via_out':       [  -1.9, 707.9, 407.7,  8.6, 89.5,  9.9],
         'drop_approach': DROP_APPROACH,
         'drop_pose':     [ 560.2,  34.8, 248.9, 23.0, 89.7, -4.9],
         'grip_release':  400,
